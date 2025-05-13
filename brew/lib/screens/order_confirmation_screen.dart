@@ -190,7 +190,7 @@ class OrderConfirmationScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        ...order.items.map((item) => _buildOrderItem(item)).toList(),
+        ...order.items.map((item) => _buildOrderItem(item)),
       ],
     );
   }

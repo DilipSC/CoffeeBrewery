@@ -9,8 +9,6 @@ import 'screens/cart_screen.dart';
 import 'screens/wishlist_screen.dart';
 import 'screens/order_confirmation_screen.dart';
 import 'screens/profile_screen.dart';
-import 'models/user.dart';
-import 'models/product.dart';
 import 'providers/auth_provider.dart';
 import 'providers/cart_provider.dart';
 import 'providers/wishlist_provider.dart';
