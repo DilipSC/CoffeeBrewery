@@ -8,9 +8,15 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-    final user = authProvider.user!;
-    
+    // Dummy data for profile
+    final user = {
+      'name': 'John Doe',
+      'email': 'john.doe@example.com',
+      'profileImage': '',
+      'address': '123 Coffee St, Brew City',
+      'phone': '+1 234 567 8900',
+    };
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -24,18 +30,12 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF3E2723),
-          ),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF3E2723)),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.edit,
-              color: Color(0xFF3E2723),
-            ),
+            icon: const Icon(Icons.edit, color: Color(0xFF3E2723)),
             onPressed: () {
               // Navigate to edit profile screen
             },
@@ -53,20 +53,22 @@ class ProfileScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 50,
                     backgroundColor: const Color(0xFF6F4E37).withOpacity(0.1),
-                    backgroundImage: user.profileImage.isNotEmpty
-                        ? NetworkImage(user.profileImage)
-                        : null,
-                    child: user.profileImage.isEmpty
-                        ? const Icon(
-                            Icons.person,
-                            size: 50,
-                            color: Color(0xFF6F4E37),
-                          )
-                        : null,
+                    backgroundImage:
+                        user['profileImage']!.isNotEmpty
+                            ? NetworkImage(user['profileImage']!)
+                            : null,
+                    child:
+                        user['profileImage']!.isEmpty
+                            ? const Icon(
+                              Icons.person,
+                              size: 50,
+                              color: Color(0xFF6F4E37),
+                            )
+                            : null,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    user.name,
+                    user['name']!,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -75,11 +77,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    user.email,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey.shade600,
-                    ),
+                    user['email']!,
+                    style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
                   ),
                 ],
               ),
@@ -101,7 +100,10 @@ class ProfileScreen extends StatelessWidget {
                   _buildProfileItem(
                     icon: Icons.location_on_outlined,
                     title: 'Delivery Address',
-                    subtitle: user.address.isNotEmpty ? user.address : 'Add address',
+                    subtitle:
+                        user['address']!.isNotEmpty
+                            ? user['address']!
+                            : 'Add address',
                     onTap: () {
                       // Navigate to address screen
                     },
@@ -110,7 +112,10 @@ class ProfileScreen extends StatelessWidget {
                   _buildProfileItem(
                     icon: Icons.phone_outlined,
                     title: 'Phone Number',
-                    subtitle: user.phone.isNotEmpty ? user.phone : 'Add phone number',
+                    subtitle:
+                        user['phone']!.isNotEmpty
+                            ? user['phone']!
+                            : 'Add phone number',
                     onTap: () {
                       // Navigate to phone screen
                     },
@@ -174,27 +179,32 @@ class ProfileScreen extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (ctx) => AlertDialog(
-                      title: const Text('Log Out'),
-                      content: const Text('Are you sure you want to log out?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            authProvider.logout();
-                            Navigator.of(ctx).pop();
-                            Navigator.of(context).pushReplacementNamed('/login');
-                          },
-                          child: const Text(
-                            'Log Out',
-                            style: TextStyle(color: Colors.red),
+                    builder:
+                        (ctx) => AlertDialog(
+                          title: const Text('Log Out'),
+                          content: const Text(
+                            'Are you sure you want to log out?',
                           ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // authProvider.logout();
+                                Navigator.of(ctx).pop();
+                                Navigator.of(
+                                  context,
+                                ).pushReplacementNamed('/login');
+                              },
+                              child: const Text(
+                                'Log Out',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
                   );
                 },
                 backgroundColor: Colors.white,
@@ -225,11 +235,7 @@ class ProfileScreen extends StatelessWidget {
               color: const Color(0xFF6F4E37).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              icon,
-              color: const Color(0xFF6F4E37),
-              size: 24,
-            ),
+            child: Icon(icon, color: const Color(0xFF6F4E37), size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -247,10 +253,7 @@ class ProfileScreen extends StatelessWidget {
                 if (subtitle != null)
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey.shade600,
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                   ),
               ],
             ),
